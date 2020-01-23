@@ -1,5 +1,5 @@
 # HYPE Industries AI Pipeline Tools
-bla bla
+The HYPE Industries AI Pipeline tools are designed to help with mass file and photographs, when build object detection frameworks. It has a standard HYPE annotation format that everything is converted to. After being converted it can be manipulated using more tools, and then exported to a specific format. For example, the first build of this code, was designed to go from the dataturk annotation format to HYPE Annotation format and then to be converted into Darkflow Yolo format.
 
 <hr>
 
@@ -109,6 +109,29 @@ py plot-point-preview.py --input "/output3/annotations/awd_1.json"         # no 
 
 <hr>
 
+## Overlay Generator
+Generate an overlay of the bounding box over each image. Outputs only the images to a directory. Must use a input directory that is an HYPE Annotate format.
+
+<b>Options</b>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--input` | `-i` | Input directory. Contains `/annotations` and `/img` directories<br> as dictated by HYPE Annotation format. | required |
+|`--output` | `-o` | Output directory to create. Directory must not exist.<br>Only outpute the pictures. | required |
+| `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
+
+<b>Usage</b>
+```python
+# CLI
+py overlay-generator.py --input <path to json annotation> --output <path to output>
+
+# Example
+py overlay-generator.py --input "output3" --output "output4" # enable points
+```
+
+
+<hr>
+
 ## Darkflow Converter
 Use the Darkflow converter to convert from HYPE Annotation format. It will produce an `/img` folder with all the `.jpg` images and an `/annotations` folder with the `.xml` formatted data. The images and xml's correspond to each other by name.
 
@@ -201,3 +224,25 @@ The top left of the image is the origin (0,0). These number therefor represent t
   }
 }
 ```
+
+<hr>
+
+## FIXME
+- google image Scrapper
+- `merge.py` uses the variable `img_cnt`, when it should use the variable `image_cnt`
+- cleanup `dataturk-download.py`
+- darknet converter
+
+## Changelog
+<b>January 22, 2020</b>
+- Error in naming scheme when generating the xml, cause the file name attribute not to have floating zeros that matched the file name.
+- Convert to Darkflow from HYPE annotated format using the `to-darkflow.py`.
+- Generate bounding box preview of all images in a package, using `overlay-generator.py`.
+- Manipulator updated to support new HYPE annotated format.
+- Added argparse to all scripts allowing options .
+- See live progress bar as image processing progresses.
+
+<b>January 21, 2020</b>
+- Plot Point Preview allows you to preview a bounding box, by opening an XML file.
+- Merge Script allows you to combined multiple HYPE annotated packages together.
+- Dataturk downloader, can now download images from online, using the dataturk json format.
