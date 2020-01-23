@@ -17,7 +17,7 @@ Use a `JSON` file provided by Dataturk. These json file have the annotations for
 
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py "dataturk-download.py" --input <json file> --output <export folder>
 
@@ -41,7 +41,7 @@ The dataset merge tool can be used to combined multiple HYPE annotated datasets.
 | `--crosscheck` | `-c` | Removes image if duplicated. Num is hash amount off. <br> Set to `-1` to disable. | default `10`|
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py "merge.py" --output <output folder> --input <input folder 1> <input folder 2> --crosscheck -1
 
@@ -66,7 +66,7 @@ The manipulator tool creates duplicates of images. It applies filters, rotates, 
 | `--dictate` | `-d` | Adds notes to annotation file of what process done to pic. | optional |
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py manipulator.py --input <path to directory> --output <path to output>
 
@@ -98,7 +98,7 @@ Use the point plot preview to verify that your point of an annotated image are c
 | `--point` | `-p` | Adds point location in corners | optional |
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py plot-point-preview.py --input <path to json annotation>
 
@@ -121,7 +121,7 @@ Generate an overlay of the bounding box over each image. Outputs only the images
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py overlay-generator.py --input <path to json annotation> --output <path to output>
 
@@ -142,7 +142,7 @@ Use the Darkflow converter to convert from HYPE Annotation format. It will produ
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 
 <b>Usage</b>
-```python
+```shell
 # CLI
 py to-darkflow.py --input <path to directory> --output <path to output> --name <file prefix>
 
@@ -228,12 +228,17 @@ The top left of the image is the origin (0,0). These number therefor represent t
 <hr>
 
 ## FIXME
+- darkflow format not working
+- darknet converter
+- allow directories outside the main folder (especially for the to-darkflow converter)
 - google image Scrapper
 - `merge.py` uses the variable `img_cnt`, when it should use the variable `image_cnt`
 - cleanup `dataturk-download.py`
-- darknet converter
 
 ## Changelog
+<b>January 23, 2020</b>
+- Error when naming the attribute in the xml, the name ended in `.xml` and it should of ended in `.jpg`.
+
 <b>January 22, 2020</b>
 - Error in naming scheme when generating the xml, cause the file name attribute not to have floating zeros that matched the file name.
 - Convert to Darkflow from HYPE annotated format using the `to-darkflow.py`.

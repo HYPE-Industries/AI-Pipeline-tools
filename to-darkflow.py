@@ -69,7 +69,7 @@ for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" 
         annotation = ET.Element( "annotation" );
         ET.SubElement( annotation, "folder" ).text = output_dir;
         ET.SubElement( annotation, "filename" ).text = dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg";
-        ET.SubElement( annotation, "path" ).text = os.path.basename( output_dir ) + "/" + dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".xml";
+        ET.SubElement( annotation, "path" ).text = os.path.basename( output_dir ) + "/" + dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg";
 
         # Source
         source = ET.SubElement( annotation, "source" );
