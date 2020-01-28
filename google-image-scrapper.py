@@ -37,7 +37,7 @@ url         = args.url;            # specific url to Search
 related_img = args.related_images; # look for related images, be careful \\ keywords only
 similar_img = args.similar_images; # give image url and does reverse search \\ url only \\ img url
 imgs_succes = 0;                   # total images successfully moved
-diff_allowence = 5; # difference between each image; 0 = none; 2 = small; 5 = med; 20 = large
+diff_allowence = 20; # difference between each image; 0 = none; 2 = small; 5 = med; 20 = large
 
 print ( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % ( fg( 255 ), bg( 9 ), attr( 0 ) ) );
 
