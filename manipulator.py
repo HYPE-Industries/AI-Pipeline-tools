@@ -16,7 +16,7 @@ from colored import fg, bg, attr;
 
 # Options
 parser = argparse.ArgumentParser(description="Generate manupulated copies of images. Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)" );
-parser.add_argument( "-i", "--input", help="Input directory. Contains `/annotations` and `/img` directories as dictated by HYPE Annotation format. (required)" );
+parser.add_argument( "-i", "--input", help="Input directory. Contains `/annotations` and `/images` directories as dictated by HYPE Annotation format. (required)" );
 parser.add_argument( "-o", "--output", help="Output directory to create. Directory must not exist. (required)" );
 parser.add_argument( "-d", "--dictate", action='store_true', help="Adds notes to annotation file of what process done to pic." );
 parser.add_argument( "-n", "--name", default="awd", help="Dataset prefix name. Prepended to all files exported." );
@@ -43,7 +43,7 @@ def progress( count, total, status='' ):
 # Create Directory
 try:
     os.mkdir( output_dir );
-    os.mkdir( output_dir + "/img" );
+    os.mkdir( output_dir + "/images" );
     os.mkdir( output_dir + "/annotations" )
 except FileExistsError:
     print( "Erro: Directory \'" + output_dir + "\' already exists" );
@@ -51,10 +51,10 @@ except FileExistsError:
 
 
 # Validate all inputs
-if os.path.isdir( os.path.join( os.getcwd(), input_dir ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "img" ) ):
+if os.path.isdir( os.path.join( os.getcwd(), input_dir ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "images" ) ):
     est_img = len( os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) ) * ( 3 * 7 * 5 );
 else:
-    print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /img folder and /annotations folder." );
+    print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /images folder and /annotations folder." );
     exit();
 
 print ( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % ( fg( 255 ), bg( 9 ), attr( 0 ) ) );
@@ -64,7 +64,7 @@ print ( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % 
 for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ):
     with open( os.path.join( os.getcwd(), input_dir, "annotations", manifest ), "r" ) as _manifest:
         data = json.load( _manifest ) # read file
-        img_file = os.path.join( os.getcwd(), input_dir, "img", data[ "file" ] ); # image file
+        img_file = os.path.join( os.getcwd(), input_dir, "images", data[ "file" ] ); # image file
 
         if os.path.isfile( img_file ):
             image = Image.open( img_file ); # open file
@@ -181,7 +181,7 @@ for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" 
 
 
                         # Save File
-                        _img_size.save( os.path.join( os.getcwd(), output_dir, "img", dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=60 ); # save images to output
+                        _img_size.save( os.path.join( os.getcwd(), output_dir, "images", dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=100 ); # save images to output
                         _data[ "file" ] = dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg";
                         if enable_dictate:
                             _data[ "note" ] = {};

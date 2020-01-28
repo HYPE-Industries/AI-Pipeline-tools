@@ -57,7 +57,7 @@ with open( input_file, 'r' ) as _f:
     # Create Folder
     try:
         os.mkdir( output_dir );
-        os.mkdir( output_dir + "/img" );
+        os.mkdir( output_dir + "/images" );
         os.mkdir( output_dir + "/annotations" )
     except FileExistsError:
         print( "Directory \'" + output_dir + "\' already exists" );
@@ -69,7 +69,7 @@ with open( input_file, 'r' ) as _f:
     while mod:
         _file = json.loads( mod.strip() ); # Read line input
         file_name =  dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) );
-        file_dir  = output_dir + "/img/" + file_name + ".jpg";
+        file_dir  = output_dir + "/images/" + file_name + ".jpg";
 
         # Write Image
         response = requests.get( _file[ "content" ] ); # grab from url

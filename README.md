@@ -28,6 +28,34 @@ py "dataturk-download.py" --input "AIDA datasets.json"  --output "output_folder"
 
 <hr>
 
+## Google Downloader
+Using the google image downloader you can scrap a large amount of images from google. Additionally, it will crosscheck all directories in the main folder both just directories of images, and HYPE Annotation folders. You can set custom crosscheck folder using the `--crosscheck` option.
+
+It will ask you to check the temp directory, during this time go to this directory and make sure all the images are valid, then press enter. After the process is done delete all the images left in the temp folder.
+
+<b>Options</b>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--url` | `-i` | Google Search url or Image Path for `--similar_img` | optional |
+|`--similar_images` | `-s` | Will download related images. Only for use with direct image url. | optional |
+|`--keywords` | `-k` | List of keywords separated by a space. | optional. |
+|`--related_images` | `-r` | Will download related images. Only for use with keywords | optional |
+|`--crosscheck` | `-c` | By defualt will search all first level directories in the root folder, including `/images` for HYPE Annotations. Pass list of directories with space in-between, to define custom directories to crosscheck. | default all dir in `~/` |
+|`--num_images`|`-n` | Number of images to export. For each keyword. | default `100` |
+
+<b>Usage</b>
+```shell
+# url download
+py "google-image-scrapper.py" --output "output folder" --url "url" -n 100
+
+# keyword download
+py "google-image-scrapper.py" --output "output folder" --keywords "dog" "cat" -n 100
+```
+
+
+<hr>
+
 ## Dataset Merge
 The dataset merge tool can be used to combined multiple HYPE annotated datasets. These data sets MUST be in the HYPE annotated format. The tool additionally can crosscheck images that are being merged to make sure there aren't duplicates.
 
@@ -35,7 +63,7 @@ The dataset merge tool can be used to combined multiple HYPE annotated datasets.
 
 | Name | Alias | Description | required |
 |---   | ----- | ---- | --- |
-|`--input` | `-i` | Input directory. Contains `/annotations` and `/img` directories<br> as dictated by HYPE Annotation format. Multiple directories<br>separated by space. | at least 1 |
+|`--input` | `-i` | Input directory. Contains `/annotations` and `/images` directories<br> as dictated by HYPE Annotation format. Multiple directories<br>separated by space. | at least 1 |
 |`--output` | `-o` | Output directory to create. Directory must not exist. | required |
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 | `--crosscheck` | `-c` | Removes image if duplicated. Num is hash amount off. <br> Set to `-1` to disable. | default `10`|
@@ -60,7 +88,7 @@ The manipulator tool creates duplicates of images. It applies filters, rotates, 
 
 | Name | Alias | Description | required |
 |---   | ----- | ---- | --- |
-|`--input` | `-i` | Input directory. Contains `/annotations` and `/img` directories<br> as dictated by HYPE Annotation format. | required |
+|`--input` | `-i` | Input directory. Contains `/annotations` and `/images` directories<br> as dictated by HYPE Annotation format. | required |
 |`--output` | `-o` | Output directory to create. Directory must not exist. | required |
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 | `--dictate` | `-d` | Adds notes to annotation file of what process done to pic. | optional |
@@ -116,7 +144,7 @@ Generate an overlay of the bounding box over each image. Outputs only the images
 
 | Name | Alias | Description | required |
 |---   | ----- | ---- | --- |
-|`--input` | `-i` | Input directory. Contains `/annotations` and `/img` directories<br> as dictated by HYPE Annotation format. | required |
+|`--input` | `-i` | Input directory. Contains `/annotations` and `/images` directories<br> as dictated by HYPE Annotation format. | required |
 |`--output` | `-o` | Output directory to create. Directory must not exist.<br>Only outpute the pictures. | required |
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 
@@ -133,11 +161,11 @@ py overlay-generator.py --input "output3" --output "output4" # enable points
 <hr>
 
 ## Darkflow Converter
-Use the Darkflow converter to convert from HYPE Annotation format. It will produce an `/img` folder with all the `.jpg` images and an `/annotations` folder with the `.xml` formatted data. The images and xml's correspond to each other by name.
+Use the Darkflow converter to convert from HYPE Annotation format. It will produce an `/images` folder with all the `.jpg` images and an `/annotations` folder with the `.xml` formatted data. The images and xml's correspond to each other by name.
 
 | Name | Alias | Description | required |
 |---   | ----- | ---- | --- |
-|`--input` | `-i` | Input directory. Contains `/annotations` and `/img` directories<br> as dictated by HYPE Annotation format. | required |
+|`--input` | `-i` | Input directory. Contains `/annotations` and `/images` directories<br> as dictated by HYPE Annotation format. | required |
 |`--output` | `-o` | Output directory to create. Directory must not exist. | required |
 | `--name` | `-n` | Dataset prefix name. Prepended to all files exported. | default `awd` |
 
@@ -154,7 +182,7 @@ py to-darkflow.py --input "output" --output "output_new"
 <hr>
 
 ## HYPE Annotations Format
-There is a folder with an folder label `/img` and `/annotations`. The `/img` directory stores `.jpg` photographs with the same name corresponding to a `.json` file storing the annotation data in the `/annotations` folder.
+There is a folder with an folder label `/images` and `/annotations`. The `/images` directory stores `.jpg` photographs with the same name corresponding to a `.json` file storing the annotation data in the `/annotations` folder.
 
 <b>Point Plotting</b><br>
 The top left of the image is the origin (0,0). These number therefor represent the x and y distance in pixels from the origin.
@@ -168,7 +196,7 @@ The top left of the image is the origin (0,0). These number therefor represent t
 
 <b>Directory Structure</b>
 - /output_folder
-  - /img
+  - /images
     - awd_1.jpg
     - awd_2.jpg
   - /annotations
@@ -180,7 +208,7 @@ The top left of the image is the origin (0,0). These number therefor represent t
 {
   "dataset": "Name of set",
   "publisher": "Company Name",
-  "file": "photograph name in /img folder",
+  "file": "photograph name in /images folder",
   "date": "date this file is created",
   "annotation": [
     {
@@ -228,14 +256,19 @@ The top left of the image is the origin (0,0). These number therefor represent t
 <hr>
 
 ## FIXME
-- darkflow format not working
+- add converter for edgecase 
+- add progress bar to google scrapper
 - darknet converter
 - allow directories outside the main folder (especially for the to-darkflow converter)
-- google image Scrapper
 - `merge.py` uses the variable `img_cnt`, when it should use the variable `image_cnt`
 - cleanup `dataturk-download.py`
 
 ## Changelog
+<b>January 28, 2020</b>
+- Updated all jpeg exports to be at 100%
+- Google Image Scrapper Completed, with built in merge
+- export folder for images is now `/images`
+
 <b>January 23, 2020</b>
 - Error when naming the attribute in the xml, the name ended in `.xml` and it should of ended in `.jpg`.
 

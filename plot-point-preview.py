@@ -24,7 +24,7 @@ input_file = args.input; # input json file
 enable_point = args.point; # enable corner points
 
 os.chdir( os.path.dirname( os.path.join( os.getcwd(), input_file ) ) ); # change Directory to one containing json
-os.chdir( "../img" );
+os.chdir( "../images" );
 
 print ( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % ( fg( 255 ), bg( 9 ), attr( 0 ) ) );
 

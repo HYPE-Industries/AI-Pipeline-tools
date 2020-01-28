@@ -14,7 +14,7 @@ from colored import fg, bg, attr;
 
 # Options
 parser = argparse.ArgumentParser(description='Merge HYPE Annotation Format Folder. Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)');
-parser.add_argument( "-i", "--input", nargs='*', help="Input directory. Contains /annotations and /img directories as dictated by HYPE Annotation format. Multiple directories separated by space. (required)" );
+parser.add_argument( "-i", "--input", nargs='*', help="Input directory. Contains /annotations and /images directories as dictated by HYPE Annotation format. Multiple directories separated by space. (required)" );
 parser.add_argument( "-o", "--output", help="Output directory to create. Directory must not exist. (required)" );
 parser.add_argument( "-n", "--name", default="awd", help="Dataset prefix name. Prepended to all files exported." );
 parser.add_argument( "-c", "--crosscheck", type=int, default=10, help='Enable deleting duplicated image. [num] how close the image are within. Set to \'-1\' to disable.');
@@ -51,7 +51,7 @@ if output_dir == None or input_dir == None:
 # Create Directory
 try:
     os.mkdir( output_dir );
-    os.mkdir( output_dir + "/img" );
+    os.mkdir( output_dir + "/images" );
     os.mkdir( output_dir + "/annotations" );
 except FileExistsError:
     print( "Erro: Directory \'" + output_dir + "\' already exists" );
@@ -59,11 +59,11 @@ except FileExistsError:
 
 # Validate all inputs
 for dir in _input_dir:
-    if os.path.isdir( os.path.join( os.getcwd(), dir ) ) and os.path.isdir( os.path.join( os.getcwd(), dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), dir, "img" ) ):
+    if os.path.isdir( os.path.join( os.getcwd(), dir ) ) and os.path.isdir( os.path.join( os.getcwd(), dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), dir, "images" ) ):
         input_dir.append( os.path.join( os.getcwd(), dir ) );
         est_img += len( os.listdir( os.path.join( os.getcwd(), dir, "annotations" ) ) );
     else:
-        print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /img folder and /annotations folder." );
+        print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /images folder and /annotations folder." );
         exit();
 
 # Move to new directory
@@ -71,7 +71,7 @@ for dir in input_dir:
     for manifest in os.listdir( os.path.join( os.getcwd(), dir, "annotations" ) ):
         with open( os.path.join( os.getcwd(), dir, "annotations", manifest ), "r" ) as _manifest:
             data = json.load( _manifest ) # read file
-            img_file = os.path.join( os.getcwd(), dir, "img", data[ "file" ] ); # image file
+            img_file = os.path.join( os.getcwd(), dir, "images", data[ "file" ] ); # image file
 
             if os.path.isfile( img_file ):
                 img_scan = img_scan + 1; # add to scanned images
@@ -96,7 +96,7 @@ for dir in input_dir:
 
                 if not _exists:
                     img_hash.append( hash ); # add ti hash list
-                    img.save( os.path.join( os.getcwd(), output_dir, "img", dataset_name + "_" + str( img_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=60 ); # save images to output
+                    img.save( os.path.join( os.getcwd(), output_dir, "images", dataset_name + "_" + str( img_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=100 ); # save images to output
                     data[ "file" ] = dataset_name + "_" + str( img_cnt ).zfill( len( str( est_img ) ) ) + ".jpg";
                     with open( os.path.join( os.getcwd(), output_dir, "annotations", dataset_name + "_" + str( img_cnt ).zfill( len( str( est_img ) ) ) + ".json" ), 'w') as outfile:
                         json.dump( data, outfile, indent=2 )

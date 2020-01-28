@@ -13,7 +13,7 @@ from colored import fg, bg, attr;
 
 # Options
 parser = argparse.ArgumentParser(description='Merge HYPE Annotation Format Folder. Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)');
-parser.add_argument( "-i", "--input", help="Input directory. Contains /annotations and /img directories as dictated by HYPE Annotation format. Multiple directories separated by space. (required)" );
+parser.add_argument( "-i", "--input", help="Input directory. Contains /annotations and /images directories as dictated by HYPE Annotation format. Multiple directories separated by space. (required)" );
 parser.add_argument( "-o", "--output", help="Output directory to create. Directory must not exist. (required)" );
 parser.add_argument( "-n", "--name", default="awd", help="Dataset prefix name. Prepended to all files exported." );
 
@@ -45,17 +45,17 @@ except FileExistsError:
     exit();
 
 # Validate all inputs
-if os.path.isdir( os.path.join( os.getcwd(), input_dir ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "img" ) ):
+if os.path.isdir( os.path.join( os.getcwd(), input_dir ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "images" ) ):
     est_img += len( os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) );
 else:
-    print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /img folder and /annotations folder." );
+    print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /images folder and /annotations folder." );
     exit();
 
 # Start Image Loop
 for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ):
     with open( os.path.join( os.getcwd(), input_dir, "annotations", manifest ), "r" ) as _manifest:
         data = json.load( _manifest ) # read file
-        img_file = os.path.join( os.getcwd(), input_dir, "img", data[ "file" ] ); # image file
+        img_file = os.path.join( os.getcwd(), input_dir, "images", data[ "file" ] ); # image file
         img = Image.open( img_file ); # open file
 
         draw = ImageDraw.Draw( img );
@@ -65,7 +65,7 @@ for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" 
             draw.rectangle( [ label[ "bndbox" ][ "xmin" ], label[ "bndbox" ][ "ymax" ], label[ "bndbox" ][ "xmax" ], label[ "bndbox" ][ "ymax" ] + 20 ], outline="blue", fill="blue" );
             draw.text( [ label[ "bndbox" ][ "xmin" ] + 5, label[ "bndbox" ][ "ymax" ] + 5 ], label[ "label" ] );
 
-        img.save( os.path.join( os.getcwd(), output_dir, dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=60 ); # save images to output
+        img.save( os.path.join( os.getcwd(), output_dir, dataset_name + "_" + str( image_cnt ).zfill( len( str( est_img ) ) ) + ".jpg" ), "JPEG", quality=100 ); # save images to output
         image_cnt = image_cnt + 1; # transfer image count
         img.close(); # close image
         progress( image_cnt, est_img, "Overmapping" );
