@@ -1,4 +1,5 @@
 # Deep Learning Pipeline
+# HYPE Industries
 import sys;
 
 # Progress Bar # Vladimir Ignatyev <ya.na.pochte@gmail.com>

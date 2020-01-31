@@ -1,7 +1,5 @@
-# HYPE Industries AI Pipeline Tools
+recognition# HYPE Industries AI Pipeline Tools
 The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Google Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
-
-[TOC]
 
 <hr>
 
@@ -19,7 +17,7 @@ The options for the CLI command are as followed. The DS information (ex. `ds_num
 |---   | ----- | ---- | --- |
 |`--input` | `-i` | Location of the file or directory, containing the dataset information. | required |
 |`--output` | `-o` | Output directory name, to create, with HYPE Annotations. | required |
-|`--format`|`-f` | Format to convert from. See documentation to see list of acceptable formats along with their format codes. | required |
+|`--format`|`-f` | Format to convert from. See documentation for list of acceptable formats. | required |
 |`--ds_number`| N/A | Dataset number ex. DS1, DS2, DS3 | required |
 |`--ds_source`| N/A | Dataset Source ex. Web Source, Sythetic Data, Web Video, Live Capture, 3D Model | required |
 |`--ds_date`| N/A | Date the dataset was generated ex. JAN2020, DEC2019 | required |
@@ -74,11 +72,97 @@ bla bla
 <hr>
 
 ## HYPE Annotation Format
+The HYPE Annotation Format (HAF) was built to simplify data collection for machine vison. Consisting of a photograph and a matching annotation file, converting all your datasets into HAF, processing them, and then converting them out can save time on your Machine Vision Pipeline. It is import to note that HAF1 only supports bounding box type labeling.
 
+<br>
+
+<b>Point Plotting</b><br>
+The top left of the image is the origin (0,0). These number therefor represent the x and y distance in pixels from the origin.
+
+| x  | y  | position  |
+|---|---|---|
+| xmin | ymin | top left     |
+| xmax | ymin | top right    |
+| xmax | ymax | bottom right |
+| xmin | ymax | bottom left  |
+
+<br>
+
+<b>Directory Structure</b><br>
+The following is the directory Structure that HAF1 is placed in. This consistant format play a vital role in how HAF is able to easily move and manipulate large datasets.
+```
+output_folder
+  └ manifest.json
+  └ images
+    └ DS1_001.jpg
+    └ DS1_002.jpg
+    └ DS1_003.jpg
+    └ ...
+  └ annotations
+    └ DS1_001.json
+    └ DS1_002.json
+    └ DS1_003.json
+    └ ...
+```
+
+<br>
+
+<b>Dataset Manifest</b><br>
+The dataset manifest is located in every dataset directory, and stores important information about the dataset. For example the manifest stores class, total image count, source of annotations, and dataset name, When datasets are merged this information will go with it.
+
+```JSON
+{
+  "format": "HYPE Annotation Format v1.0.0",
+  "name": "DS1 JAN2020 - Web Source (HAF)",
+  "number": "DS1",
+  "source": "Web Source",
+  "date": "JAN2020",
+  "total": 12,
+  "birth": "2020-01-31 14:50:10.689196",
+  "class": [
+    "active_weapon_class_2"
+  ],
+  "note": "Import note on dataset"
+}
+```
+
+<br>
+
+<b>Annotation Format</b><br>
+```json
+{
+  "dataset": {
+    "name": "DS1 JAN2020 - Web Source (HAF)",
+    "number": "DS1",
+    "source": "Web Source"
+  },
+  "file": "DS1_00.jpg",
+  "date": "2020-01-31 14:49:51.617040",
+  "annotation": [
+    {
+      "label": "active_weapon_class_2",
+      "bndbox": {
+        "xmin": 296.4862393649428,
+        "ymin": 478.850186869146,
+        "xmax": 476.2456128381758,
+        "ymax": 630.6807339252167
+      }
+    }
+  ],
+  "size": {
+    "width": 1211,
+    "height": 681
+  }
+}
+```
 
 <hr>
 
 ## Research
+This section details some of the "research" that has been done when building this project.
+
+<b>Manipulated Images</b><br>
+There was originally the plan to take all images collected in a dataset and manipulate them in different ways. Filters would be applied to them, and they would be rotated and mirrored. This process would be done to every images, resulting in hundreds of sub-images for each images. This process was performed, and it did not go well at all. The system had a hard time recognizes images, and even had ghost recognition when images were manipulated. After these results that functionality was removed and would not be recommended for any project.
 
 <hr>
 
@@ -102,6 +186,7 @@ bla bla
 - importer now supports labelbox
 - modules folder, has module for progress bar
 - importer now exports a manifest file, with critical information for the dataset.
+- removed manipulator
 
 <b>January 28, 2020</b>
 - Updated all jpeg exports to be at 100%
