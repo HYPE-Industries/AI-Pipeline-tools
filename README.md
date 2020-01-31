@@ -1,4 +1,4 @@
-recognition# HYPE Industries AI Pipeline Tools
+# HYPE Industries AI Pipeline Tools
 The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Google Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
 
 <hr>
