@@ -1,7 +1,7 @@
-*
+
 !.gitattributes
 !.gitignore
-!modules/progress.py
+!modules/*
 !README.md
 !import.py
 !google-image-scrapper.py
