@@ -2,7 +2,7 @@
 !.gitattributes
 !.gitignore
 !README.md
-!dataturk-download.py
+!import.py
 !google-image-scrapper.py
 !manipulator.py
 !merge.py
@@ -10,3 +10,4 @@
 !plot-point-preview.py
 !to-darkflow.py
 !chromedriver.exe
+!modules/progress.py

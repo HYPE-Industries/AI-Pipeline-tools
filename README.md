@@ -1,8 +1,175 @@
 # HYPE Industries AI Pipeline Tools
-The HYPE Industries AI Pipeline tools are designed to help with mass file and photographs, when build object detection frameworks. It has a standard HYPE annotation format that everything is converted to. After being converted it can be manipulated using more tools, and then exported to a specific format. For example, the first build of this code, was designed to go from the dataturk annotation format to HYPE Annotation format and then to be converted into Darkflow Yolo format.
+The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Google Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
+
+[TOC]
 
 <hr>
 
+## Import to HAF
+The import script, will help you import datasets from other sources into HAF. Some of the supported formats are datasets from Dataturk or LabelBox. This means you can use a JSON file provided by these services and the HAF Importer will download and convert the files.
+
+
+<br>
+
+
+<b>Options</b><br>
+The options for the CLI command are as followed. The DS information (ex. `ds_number` and `ds_source`), is information for "long term" storage of the dataset, and this information will be placed in the manifest file.
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--input` | `-i` | Location of the file or directory, containing the dataset information. | required |
+|`--output` | `-o` | Output directory name, to create, with HYPE Annotations. | required |
+|`--format`|`-f` | Format to convert from. See documentation to see list of acceptable formats along with their format codes. | required |
+|`--ds_number`| N/A | Dataset number ex. DS1, DS2, DS3 | required |
+|`--ds_source`| N/A | Dataset Source ex. Web Source, Sythetic Data, Web Video, Live Capture, 3D Model | required |
+|`--ds_date`| N/A | Date the dataset was generated ex. JAN2020, DEC2019 | required |
+|`--ds_notes`| N/A | Additional notes to include. | optional |
+
+
+<br>
+<br>
+
+
+<b>Formats</b><br>
+These are the acceptable formats that can be imported. To select one of these inputs use `--format` or `-f`, followed by the Format Code.
+
+| Name | Format Code | Source Type | Description |
+|----| ----- |----|--- |
+| Dataturk | `dataturk` | Dataturk json file | Bounding box annotation only |
+| LabelBox | `labelbox` | LabelBox json file | Bounding box annotation only |
+| Edge Case | `edgecase` | Edge Case Directory | Bounding box annotation only |
+
+
+<br>
+<br>
+
+
+<b>Usage Examples</b>
+```shell
+# CLI Example
+py "import.py" --input AIDA-datasets.json  --output output_folder --format labelbox --ds_number DS5 --ds_source "Web Source" --ds_date JAN2020
+```
+
+
+<hr>
+
+## Export
+Coming soon
+
+
+<hr>
+
+## Mask Generator
+bla bla
+
+<hr>
+
+## Annotation Preview
+bla bla
+
+<hr>
+
+## Google Image Scrapper
+
+<hr>
+
+## HYPE Annotation Format
+
+
+<hr>
+
+## Research
+
+<hr>
+
+
+## FIXME
+- add converter for edgecase
+- rebuild image scrapper
+- rebuild exporter
+- rebuild merger, with manifest merge
+- rebuild plot point preview
+- rebuild overlay generator
+
+
+<br>
+
+
+## Changelog
+<b>January 31, 2020</b>
+- Conversions to HYPE Annotation format will now be done from `import.py`.
+- dataturk downloader removed, and now ran from `import.py`.
+- importer now supports labelbox
+- modules folder, has module for progress bar
+- importer now exports a manifest file, with critical information for the dataset.
+
+<b>January 28, 2020</b>
+- Updated all jpeg exports to be at 100%
+- Google Image Scrapper Completed, with built in merge
+- export folder for images is now `/images`
+
+<b>January 23, 2020</b>
+- Error when naming the attribute in the xml, the name ended in `.xml` and it should of ended in `.jpg`.
+
+<b>January 22, 2020</b>
+- Error in naming scheme when generating the xml, cause the file name attribute not to have floating zeros that matched the file name.
+- Convert to Darkflow from HYPE annotated format using the `to-darkflow.py`.
+- Generate bounding box preview of all images in a package, using `overlay-generator.py`.
+- Manipulator updated to support new HYPE annotated format.
+- Added argparse to all scripts allowing options .
+- See live progress bar as image processing progresses.
+
+<b>January 21, 2020</b>
+- Plot Point Preview allows you to preview a bounding box, by opening an XML file.
+- Merge Script allows you to combined multiple HYPE annotated packages together.
+- Dataturk downloader, can now download images from online, using the dataturk json format.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+# Old Documents - to be fixed
 ## Dataturk's Downloader
 Use a `JSON` file provided by Dataturk. These json file have the annotations for each photograph and have a url to the image. This python script will download it from the url and convert the annotations to the HYPE annotations format. You should be in the main directory of the HYPE AI Tools.
 
@@ -254,33 +421,3 @@ The top left of the image is the origin (0,0). These number therefor represent t
 ```
 
 <hr>
-
-## FIXME
-- add converter for edgecase 
-- add progress bar to google scrapper
-- darknet converter
-- allow directories outside the main folder (especially for the to-darkflow converter)
-- `merge.py` uses the variable `img_cnt`, when it should use the variable `image_cnt`
-- cleanup `dataturk-download.py`
-
-## Changelog
-<b>January 28, 2020</b>
-- Updated all jpeg exports to be at 100%
-- Google Image Scrapper Completed, with built in merge
-- export folder for images is now `/images`
-
-<b>January 23, 2020</b>
-- Error when naming the attribute in the xml, the name ended in `.xml` and it should of ended in `.jpg`.
-
-<b>January 22, 2020</b>
-- Error in naming scheme when generating the xml, cause the file name attribute not to have floating zeros that matched the file name.
-- Convert to Darkflow from HYPE annotated format using the `to-darkflow.py`.
-- Generate bounding box preview of all images in a package, using `overlay-generator.py`.
-- Manipulator updated to support new HYPE annotated format.
-- Added argparse to all scripts allowing options .
-- See live progress bar as image processing progresses.
-
-<b>January 21, 2020</b>
-- Plot Point Preview allows you to preview a bounding box, by opening an XML file.
-- Merge Script allows you to combined multiple HYPE annotated packages together.
-- Dataturk downloader, can now download images from online, using the dataturk json format.
