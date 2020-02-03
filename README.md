@@ -58,16 +58,85 @@ Coming soon
 <hr>
 
 ## Mask Generator
-bla bla
+Comming soon
 
 <hr>
 
 ## Annotation Preview
-bla bla
+With the help of the Annoation Preview you can select an annotation file (HAF) and preview the bounding box in a preview window. This tool can be very helpful when designing import tools to ensure that you have imported in to HAF correctly.
+
+
+<br>
+
+
+<b>Cord Location</b><br>
+These colors signify each corner of the bounding box. This helps you ensure the bounding box is in the correct position as well in the right orientation.
+
+| Position | Color | X | Y |
+|---|---|---|---|
+| top left | BLUE | xmin | ymin |
+| top right | RED | xmax | ymin |
+| bottom right | GREEN | xmax | ymax |
+| bottom left | ORGANGE | xmin | ymax |
+
+
+<br>
+
+
+<b>Options</b>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--input` | `-i` | Input JSON file. Path to HYPE Annotation file. | required |
+| `--point` | `-p` | Adds point location in corners | optional |
+
+
+<br>
+
+
+<b>Usage</b>
+```shell
+# CLI
+py preview.py --input <path to json annotation>
+
+# Example
+py preview.py --input "/output3/annotations/awd_1.json" --point # enable points
+py preview.py --input "/output3/annotations/awd_1.json"         # no points
+```
+
 
 <hr>
 
 ## Google Image Scrapper
+Using the google image downloader you can scrap a large amount of images from google. Additionally, it will crosscheck all directories in the main folder both just directories of images, and HYPE Annotation folders. You can set custom crosscheck folder using the `--crosscheck` option.
+
+It will ask you to check the temp directory, during this time go to this directory and make sure all the images are valid, then press enter. After the process is done delete all the images left in the temp folder.
+
+This requires the `modules/chromedriver.exe` to run, if you are downloading more than 100 images.
+
+<br>
+
+<b>Options</b>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--output` | `-o` | Output directory name, with downloaded images. | required |
+|`--url` | `-i` | Google Image URL will be scrapped for images. | required |
+|`--crosscheck` | `-c` | By defualt will search all first level directories in the root folder, including `/images` for HYPE Annotations. Pass list of directories with space in-between, to define custom directories to crosscheck. Use `-1` to disable crosscheck. | default all dir in `~/` |
+|`--num_images`|`-n` | Number of images to download to directory. | default `100` |
+
+<br>
+
+<b>Usage</b>
+```shell
+# url download
+py "image-scrapper.py" --output "output folder" --url "url" -n 100
+
+# keyword download
+py "google-image-scrapper.py" --output "output folder" --url "www.google.com/search?q=dogs" -n 1000
+```
+
+
 
 <hr>
 
@@ -169,17 +238,22 @@ There was originally the plan to take all images collected in a dataset and mani
 
 ## FIXME
 - add converter for edgecase
-- rebuild image scrapper
 - rebuild exporter
 - rebuild merger, with manifest merge
-- rebuild plot point preview
-- rebuild overlay generator
+- allow differences between images that are crosschecked (BACKLOG)
+- rebuild overlay generator (BACKLOG)
 
 
 <br>
 
 
 ## Changelog
+<b>February 2, 2020</b>
+- Google Image Scrapper Updated
+
+<b>February 1, 2020</b>
+- Update preview tool, now applies label to bounding box
+
 <b>January 31, 2020</b>
 - Conversions to HYPE Annotation format will now be done from `import.py`.
 - dataturk downloader removed, and now ran from `import.py`.

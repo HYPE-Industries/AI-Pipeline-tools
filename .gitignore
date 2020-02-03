@@ -4,10 +4,9 @@
 !modules/*
 !README.md
 !import.py
-!google-image-scrapper.py
+!image-scrapper.py
 !manipulator.py
 !merge.py
 !overlay-generator.py
-!plot-point-preview.py
+!preview.py
 !to-darkflow.py
-!chromedriver.exe

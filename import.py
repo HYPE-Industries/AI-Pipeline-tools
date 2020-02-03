@@ -2,12 +2,6 @@
 # Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)
 # Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from HYPE Industries.
 # Written by Evan Sellers <sellersew@gmail.com>, January 2020
-
-# Fixme
-# - write Manifest file
-# - complete transfer for dataturk
-# - documentation
-
 import argparse;
 import os;
 import json;
@@ -50,7 +44,7 @@ output_loc   = os.path.join( os.getcwd(), output_dir ); # Full Output Directory
 
 
 # Validate Source Format
-if format.lower() not in [ "dataturk", "labelbox" ]:
+if format.lower() not in [ "dataturk", "labelbox", "edgecase" ]:
     print( "Error: \"" + format.lower() + "\" isn't a valid format. Please take alook at the documentation." );
     exit();
 
@@ -77,7 +71,7 @@ except:
     exit();
 
 
-# Write Manifest File
+# Manifest Preview
 print( "\n" )
 print( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % ( fg( 255 ), bg( 9 ), attr( 0 ) ) );
 print( "Convert and download annoations from the " + format + " format to HAF.\n" );
@@ -226,28 +220,17 @@ elif format == "labelbox":
             images_converted += 1
             progress.display( images_converted, images_stack, "downloading" );
 
+elif format == "edgecase":
 
+    if os.path.isdir( input_loc ):
+
+    else:
+        print( "Error: An error occured while trying to convert. The edgecase format requies and input directory, that is a valid edgecase folder." );
 
 else:
-    print( "Error: An error occured while trying to convert. The format was not reconized." )
+    print( "Error: An error occured while trying to convert. The format was not reconized." );
 
-print( "\nCompleted. " + str( images_converted ) + " images and annotations converted to HAF v1" )
-
-# Write File manifest
-# manifest = open( os.path.join( output_loc, "manifest.txt" ),"a");
-# manifest.write( "================== " + dataset_name + "==================\n" );
-# manifest.write( "Number       : " + dataset_number + "\n" );
-# manifest.write( "Source       : " + dataset_source + "\n" );
-# manifest.write( "Mark Date    : " + dataset_date + "\n" );
-# manifest.write( "Image Count  : " + str( images_converted ) + "\n" );
-# manifest.write( "Date Created : " + str( datetime.datetime.now() ) + "\n" );
-# manifest.write( "Class        : " + str( label_class_ls ) + "\n" );
-# if dataset_note:
-#     manifest.write( "Note         : " + dataset_note );
-# manifest.write( "\n\n" );
-# manifest.write( "HYPE Annotation Format (HAF) v1.0.0" + "\n" );
-# manifest.write( "Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)" );
-# manifest.close();
+print( "\nCompleted. " + str( images_converted ) + " images and annotations converted to HAF v1" );
 
 manifest = {};
 manifest[ "format" ] = "HYPE Annotation Format v1.0.0";
