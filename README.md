@@ -1,4 +1,4 @@
-# HYPE Industries AI Pipeline Tools
+manifest# HYPE Industries AI Pipeline Tools
 The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Google Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
 
 <hr>
@@ -59,6 +59,21 @@ Coming soon
 
 ## Mask Generator
 Comming soon
+
+<hr>
+
+## Merge datasets
+After all your datasets have been created you can merge them together for exporting. Don't use the merge system to merge a already merged file. If you need to merge more in, you must merge all the HAF again. This can be used to merge multiple datasets together. This will create a custom manifest with all the sub dataset information stored in the manifest.
+
+<b>Options</b><br>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--input` | `-i` | Location of HAF directory, containing the dataset information. Put space inbetween to add multiple locations. | required |
+|`--output` | `-o` | Output directory name, to create, with HYPE Annotations. | required |
+|`--name`| `-n` | Dataset prefix name. Prepended to all files exported. | `pwd` |
+
+
 
 <hr>
 
@@ -240,10 +255,9 @@ We have been using video games to generate data for weapon detection software, a
 
 
 ## FIXME
+- export documentation
+- test image scrapper
 - add converter for edgecase
-- rebuild exporter
-- rebuild merger, with manifest merge
-- allow differences between images that are crosschecked (BACKLOG)
 - rebuild overlay generator (BACKLOG)
 
 
@@ -251,6 +265,11 @@ We have been using video games to generate data for weapon detection software, a
 
 
 ## Changelog
+<b>February 18, 2020</b>
+- merger now supports manifest system
+- merger now uses progress bar implemtation
+- exporter updated
+
 <b>February 2, 2020</b>
 - Google Image Scrapper Updated
 

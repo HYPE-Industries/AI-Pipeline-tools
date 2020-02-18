@@ -93,7 +93,7 @@ response.download({
     "output_directory": os.path.join( output_loc, "temp" ),
     "no_directory": True,
     "chromedriver": "./modules/chromedriver.exe",
-    "socket_timeout": 10
+    # "socket_timeout": 10
 });
 
 

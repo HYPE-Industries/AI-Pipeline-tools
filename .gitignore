@@ -4,8 +4,8 @@
 !modules/*
 !README.md
 !import.py
+!export.py
 !image-scrapper.py
-!manipulator.py
 !merge.py
 !overlay-generator.py
 !preview.py

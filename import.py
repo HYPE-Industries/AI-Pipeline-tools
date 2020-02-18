@@ -223,7 +223,7 @@ elif format == "labelbox":
 elif format == "edgecase":
 
     if os.path.isdir( input_loc ):
-
+        print( "Do nothing" );
     else:
         print( "Error: An error occured while trying to convert. The edgecase format requies and input directory, that is a valid edgecase folder." );
 

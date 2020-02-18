@@ -37,6 +37,7 @@ def progress(count, total, status=''):
 
 print ( '%s%s HYPE Industries Military Defense Division - PRISM Mainframe %s' % ( fg( 255 ), bg( 9 ), attr( 0 ) ) );
 
+
 # Create Directory
 try:
     os.mkdir( output_dir );
@@ -44,12 +45,14 @@ except FileExistsError:
     print( "Error: Directory \'" + output_dir + "\' already exists" );
     exit();
 
+
 # Validate all inputs
 if os.path.isdir( os.path.join( os.getcwd(), input_dir ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) and os.path.isdir( os.path.join( os.getcwd(), input_dir, "images" ) ):
     est_img += len( os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ) );
 else:
     print( "Error: Failed to locate. The folders must contain a HYPE annotation format with a /images folder and /annotations folder." );
     exit();
+
 
 # Start Image Loop
 for manifest in os.listdir( os.path.join( os.getcwd(), input_dir, "annotations" ) ):
