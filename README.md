@@ -233,6 +233,9 @@ This section details some of the "research" that has been done when building thi
 <b>Manipulated Images</b><br>
 There was originally the plan to take all images collected in a dataset and manipulate them in different ways. Filters would be applied to them, and they would be rotated and mirrored. This process would be done to every images, resulting in hundreds of sub-images for each images. This process was performed, and it did not go well at all. The system had a hard time recognizes images, and even had ghost recognition when images were manipulated. After these results that functionality was removed and would not be recommended for any project.
 
+<b>synthetic data</b>
+We have been using video games to generate data for weapon detection software, and are happy to report drastic improvements in speed, accuracy and reliability in our CNN for Prism.
+
 <hr>
 
 
