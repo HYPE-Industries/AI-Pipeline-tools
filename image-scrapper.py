@@ -9,8 +9,8 @@ import argparse;
 import os;
 from modules import crosscheck;
 from colored import fg, bg, attr;
-from google_images_download import google_images_download;
-
+# from google_images_download import google_images_download;
+from modules import google_images_download;
 
 # Setup Options
 parser = argparse.ArgumentParser( description="Google Image Scrapper for Deep Leaning Pipeline" );
@@ -90,10 +90,9 @@ response = google_images_download.googleimagesdownload();
 response.download({
     "url": url,
     "limit": image_max,
-    "output_directory": os.path.join( output_loc, "temp" ),
     "no_directory": True,
+    "output_directory": os.path.join( output_loc, "temp" ),
     "chromedriver": "./modules/chromedriver.exe",
-    # "socket_timeout": 10
 });
 
 

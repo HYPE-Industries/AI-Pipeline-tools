@@ -15,7 +15,7 @@ from colored import fg, bg, attr;
 parser = argparse.ArgumentParser( description="Dataturk download to HYPE Annotation. Copyright (C) HYPE Industries Cloud Services Division - All Rights Reserved (HYPE-CSD)" );
 parser.add_argument( "-i", "--input", type=str, required=True, help="Location of the directory of HYPE Annotations, containing the dataset information." );
 parser.add_argument( "-o", "--output", type=str, required=True, help="Output directory name, to create, with HYPE Annotations." );
-parser.add_argument( "-f", "--format", type=str, required=True, help="Format to convert from. See documentation to see list of acceptable formats along with their format codes." );
+parser.add_argument( "-f", "--format", type=str, required=True, help="Format to convert to. See documentation to see list of acceptable formats along with their format codes." );
 
 
 # Define Varibles

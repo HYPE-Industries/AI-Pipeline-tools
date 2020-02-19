@@ -52,7 +52,43 @@ py "import.py" --input AIDA-datasets.json  --output output_folder --format label
 <hr>
 
 ## Export
-Coming soon
+This will export you HYPE Annoation format to another format option. It can export to only darkflow currently but support for darknet is coming soon. When exporting depending on the format a class list will come in the directory, along with a HYPE Annotation Format Manifest.
+
+
+<br>
+
+
+<b>Options</b><br>
+
+| Name | Alias | Description | required |
+|---   | ----- | ---- | --- |
+|`--input` | `-i` | Location of the file or directory, containing the dataset information. | required |
+|`--output` | `-o` | Output directory name, to create, with HYPE Annotations. | required |
+|`--format`|`-f` | Format to convert to. See documentation for list of acceptable formats. | required |
+
+
+<br>
+<br>
+
+
+<b>Formats</b><br>
+These are the acceptable formats that can be imported. To select one of these inputs use `--format` or `-f`, followed by the Format Code.
+
+| Name | Format Code | Source Type | Description |
+|----| ----- |----|--- |
+| Darkflow | `darkflow` | generators directory for darkflow | Bounding box annotation only |
+| Darknet | `darknet` | generators directory for darknet | Bounding box annotation only |
+
+
+<br>
+<br>
+
+
+<b>Usage Examples</b>
+```shell
+# CLI Example
+py "export.py" --input input_folder --output output_folder --format darkflow
+```
 
 
 <hr>
@@ -122,8 +158,8 @@ py preview.py --input "/output3/annotations/awd_1.json"         # no points
 
 <hr>
 
-## Google Image Scrapper
-Using the google image downloader you can scrap a large amount of images from google. Additionally, it will crosscheck all directories in the main folder both just directories of images, and HYPE Annotation folders. You can set custom crosscheck folder using the `--crosscheck` option.
+## Bing Image Scrapper
+Using the bing image downloader you can scrap a large amount of images from bing. Additionally, it will crosscheck all directories in the main folder both just directories of images, and HYPE Annotation folders. You can set custom crosscheck folder using the `--crosscheck` option.
 
 It will ask you to check the temp directory, during this time go to this directory and make sure all the images are valid, then press enter. After the process is done delete all the images left in the temp folder.
 
@@ -255,7 +291,6 @@ We have been using video games to generate data for weapon detection software, a
 
 
 ## FIXME
-- export documentation
 - test image scrapper
 - add converter for edgecase
 - rebuild overlay generator (BACKLOG)
@@ -265,6 +300,10 @@ We have been using video games to generate data for weapon detection software, a
 
 
 ## Changelog
+<b>February 19, 2020</b>
+- export documentation
+- updated system to use bing instead of google
+
 <b>February 18, 2020</b>
 - merger now supports manifest system
 - merger now uses progress bar implemtation
