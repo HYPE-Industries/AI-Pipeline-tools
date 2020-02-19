@@ -1,5 +1,5 @@
-manifest# HYPE Industries AI Pipeline Tools
-The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Google Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
+# HYPE Industries AI Pipeline Tools
+The HYPE Industries AI Pipeline are to designed to assist in the process of dealing with large machine vision datasets. Everything is imported and converted to the HYPE Annotation Format (HAF). Then the data can be merged, manipulated, and masked. After all your changes are made, you can use the exporter to convert it to the format you need it in. The HYPE Annotation Format is the best way to store your datasets in, as many different types of data can be converted into one standard format. In additional to all this there is also a build in Bing Image scrapper, to help you collect data for manual annotation, that can crosscheck all your datasets to ensure there is no duplicated images.
 
 <hr>
 
@@ -172,7 +172,7 @@ This requires the `modules/chromedriver.exe` to run, if you are downloading more
 | Name | Alias | Description | required |
 |---   | ----- | ---- | --- |
 |`--output` | `-o` | Output directory name, with downloaded images. | required |
-|`--url` | `-i` | Google Image URL will be scrapped for images. | required |
+|`--url` | `-i` | Bing Image URL will be scrapped for images. | required |
 |`--crosscheck` | `-c` | By defualt will search all first level directories in the root folder, including `/images` for HYPE Annotations. Pass list of directories with space in-between, to define custom directories to crosscheck. Use `-1` to disable crosscheck. | default all dir in `~/` |
 |`--num_images`|`-n` | Number of images to download to directory. | default `100` |
 
@@ -184,7 +184,7 @@ This requires the `modules/chromedriver.exe` to run, if you are downloading more
 py "image-scrapper.py" --output "output folder" --url "url" -n 100
 
 # keyword download
-py "google-image-scrapper.py" --output "output folder" --url "www.google.com/search?q=dogs" -n 1000
+py "image-scrapper.py" --output "output folder" --url "www.bing.com/search?q=dogs" -n 1000
 ```
 
 
@@ -303,6 +303,7 @@ We have been using video games to generate data for weapon detection software, a
 <b>February 19, 2020</b>
 - export documentation
 - updated system to use bing instead of google
+- updates to `.gitignore`, now place working models in the workspace dir
 
 <b>February 18, 2020</b>
 - merger now supports manifest system

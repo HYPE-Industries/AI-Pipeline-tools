@@ -1,12 +1,2 @@
-*
-!.gitattributes
-!.gitignore
-!modules/*
-!README.md
-!import.py
-!export.py
-!image-scrapper.py
-!merge.py
-!overlay-generator.py
-!preview.py
-!to-darkflow.py
+workspace/*
+modules/__pycache__/*
