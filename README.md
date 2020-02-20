@@ -304,6 +304,7 @@ We have been using video games to generate data for weapon detection software, a
 - export documentation
 - updated system to use bing instead of google
 - updates to `.gitignore`, now place working models in the workspace dir
+- import now supports edge case image format
 
 <b>February 18, 2020</b>
 - merger now supports manifest system

@@ -4,8 +4,10 @@
 # Written by Evan Sellers <sellersew@gmail.com>, January 2020
 import argparse;
 import os;
+import glob;
 import json;
 import requests;
+import shutil;
 import datetime;
 from io import BytesIO
 from PIL import Image;
@@ -222,8 +224,89 @@ elif format == "labelbox":
 
 elif format == "edgecase":
 
+    images_attempted_converted = 0;
+
     if os.path.isdir( input_loc ):
-        print( "Do nothing" );
+
+        # estimated image stack // count png in file directory
+        images_stack = len( glob.glob1( input_loc, "*.json" ) );
+
+        # Open each json file
+        for bounding_file in os.listdir( input_loc ):
+            if os.path.isfile( os.path.join( input_loc, bounding_file ) ) and os.path.join( input_loc, bounding_file ).endswith( ".json" ) and bounding_file.startswith( "People with weapons" ):
+                try:
+                    with open( os.path.join( input_loc, bounding_file ), encoding="utf-8" ) as json_file:
+                        _file     = json.load( json_file );
+
+
+                        start = bounding_file.find( "_" ) + len( "_" );
+                        end = bounding_file.find( "_", start );
+
+                        img_name  = "People with weapons" + "_" + bounding_file[start:end] + "_original.png";
+                        file_name = dataset_number + "_" + str( images_converted ).zfill( len( str( images_stack ) ) );
+                        image     = Image.open( os.path.join( input_loc, img_name ) );
+
+                        # Write Object File
+                        data = {}
+                        data[ "dataset" ] = {};
+                        data[ "dataset" ][ "name" ]   = dataset_name;
+                        data[ "dataset" ][ "number" ] = dataset_number;
+                        data[ "dataset" ][ "source" ] = dataset_source;
+                        data[ "dataset" ][ "origin" ] = bounding_file;
+                        data[ "dataset" ][ "label_time" ] = False;
+
+                        # Other File Attributes
+                        data[ "file" ] = file_name + ".png";
+                        data[ "date" ] = str( datetime.datetime.now() );
+                        data[ "annotation" ] = [];
+                        data[ "size" ] = {};
+
+                        # Set Size of image
+                        data[ "size" ][ "width" ] = image.width; #load with PIL
+                        data[ "size" ][ "height" ] = image.height;  #load with PIL
+
+                        # Bounding box
+                        annotation = {};
+                        annotation[ "bndbox" ] = {};
+                        annotation[ "bndbox" ][ "xmin" ] = min( _file[ "bbox" ][ "left" ], _file[ "bbox" ][ "right" ] ) ;
+                        annotation[ "bndbox" ][ "ymin" ] = min( _file[ "bbox" ][ "bottom" ], _file[ "bbox" ][ "top" ] );
+                        annotation[ "bndbox" ][ "xmax" ] = max( _file[ "bbox" ][ "left" ], _file[ "bbox" ][ "right" ] );
+                        annotation[ "bndbox" ][ "ymax" ] = max( _file[ "bbox" ][ "bottom" ], _file[ "bbox" ][ "top" ] );
+
+                        # label name
+                        if _file[ "tagName" ] == "People with weapons":
+                            annotation[ "label" ] = "weaponized_person";
+                            if ( ( annotation[ "bndbox" ][ "xmax" ] - annotation[ "bndbox" ][ "xmin" ] ) < 40 ):
+                                raise
+                        elif _file[ "tagName" ] == "weapon":
+                            annotation[ "label" ] = "class2_handgun";
+                            if ( ( annotation[ "bndbox" ][ "xmax" ] - annotation[ "bndbox" ][ "xmin" ] ) < 15 ):
+                                raise
+                        else:
+                            annotation[ "label" ] = "null";
+                            raise
+
+                        if annotation[ "label" ] not in label_class_ls:
+                            label_class_ls.append( annotation[ "label" ] );
+
+                        data[ "annotation" ].append( annotation );
+
+                        # Write Annotation File
+                        with open( os.path.join( output_loc, "annotations", file_name + ".json" ), 'w') as outfile:
+                            json.dump( data, outfile, indent=2 )
+
+                        # Copy File
+                        shutil.copyfile( os.path.join( input_loc, img_name ), os.path.join( output_loc, "images", file_name + ".png" ) );
+
+                        images_converted += 1
+                except:
+                    # do nothing
+                    foo = "nine"
+
+                # Next Line
+                images_attempted_converted += 1;
+                progress.display( images_attempted_converted, images_stack, "converting" );
+
     else:
         print( "Error: An error occured while trying to convert. The edgecase format requies and input directory, that is a valid edgecase folder." );
 

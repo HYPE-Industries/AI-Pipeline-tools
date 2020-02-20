@@ -1,0 +1,25 @@
+{
+  "dataset": {
+    "name": "DS3 FEB2020 - edgecase (HAF)",
+    "number": "DS3",
+    "source": "edgecase",
+    "label_time": false
+  },
+  "file": "DS3_00.png",
+  "date": "2020-02-19 16:11:39.749808",
+  "annotation": [
+    {
+      "bndbox": {
+        "xmin": 509,
+        "ymin": 295,
+        "xmax": 726,
+        "ymax": 638
+      },
+      "label": "weaponized_person"
+    }
+  ],
+  "size": {
+    "width": false,
+    "height": false
+  }
+}

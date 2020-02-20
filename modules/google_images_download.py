@@ -280,7 +280,7 @@ class googleimagesdownload:
         formatted_object['image_format'] = object['murl'].split(".")[-1];
         formatted_object['image_height'] = False;
         formatted_object['image_width'] = False;
-        formatted_object['image_link'] = object['murl']
+        formatted_object['image_link'] = object['murl'].text.replace(" ", "+");
         formatted_object['image_description'] = object['desc']
         formatted_object['image_host'] = object['purl']
         formatted_object['image_source'] = object['purl']
